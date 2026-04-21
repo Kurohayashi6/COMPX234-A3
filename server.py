@@ -100,3 +100,9 @@ def handle_client(client_socket, addr):
 
     print(f"Connection with {addr} closed.")
 
+def start_server():
+    host = 'localhost'
+    port = 9090
+    sta_thread = threading.Thread(target=print_server_sta, daemon=True)
+    sta_thread.start()
+
