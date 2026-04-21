@@ -47,6 +47,20 @@ def print_server_sta():
             print(f"Total errors: {sta['total_errors']}")
 
             
+def handle_client(client_socket, addr):
+    print(f"New client connected from {addr}.")
 
+    with lock:
+        sta['total_clients'] += 1
+    with client_socket:
+        while True:
+            NNN = recvall(client_socket, 3)
+            if not NNN:
+                break
+
+            msg_len = int(NNN)
+            msg_body = recvall(client_socket, msg_len - 3)
+            if not msg_body:
+                break
 
 
