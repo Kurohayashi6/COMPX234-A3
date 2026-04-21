@@ -63,4 +63,35 @@ def handle_client(client_socket, addr):
             if not msg_body:
                 break
 
+            parts = msg_body.strip().split(' ', 2)
+            cmd = parts[0]
+            key = parts[1]
+            val = parts[2] if len(parts) > 2 else ""
+
+            with lock:
+                sta['total_ops'] += 1
+
+                if cmd == 'R':
+                    sta['total_reads'] += 1
+                    if key in tuple_space:
+                        response_body = f"OK ({key}, {tuple_space[key]}) read"
+                    else:
+                        sta['total_errors'] += 1
+                        response_body = f"ERR {key} does not exist"
+                elif cmd == 'G':
+                    sta['total_gets'] += 1
+                    if key in tuple_space:
+                        pv = tuple_space.pop(key)
+                        response_body = f"OK ({key}, {pv}) removed"
+                    else:
+                        response_body = f"ERR {key} does not exist"
+                elif cmd == 'P':
+                    sta['total_puts'] += 1
+                    if key in tuple_space:
+                        sta['total_errors'] += 1
+                        response_body = f"ERR {key} already exists"
+                    else:
+                        tuple_space[key] = val
+                        response_body = f"OK ({key}, {val}) added"
+
 
