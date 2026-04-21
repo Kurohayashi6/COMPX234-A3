@@ -111,3 +111,16 @@ def start_server():
     server_socket.bind((host, port))
     server_socket.listen()
     print("Server is running and ready to accept multiple clients...")
+    try:
+        while True:
+            client_socket, addr = server_socket.accept()
+            client_thread = threading.Thread(target=handle_client, args=(client_socket, addr))
+            client_thread.start()
+    except KeyboardInterrupt:
+        print("Server is shutting down.")
+    finally:
+        server_socket.close()
+
+if __name__ == "__main__":
+    start_server()
+
