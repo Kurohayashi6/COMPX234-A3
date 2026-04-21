@@ -94,4 +94,9 @@ def handle_client(client_socket, addr):
                         tuple_space[key] = val
                         response_body = f"OK ({key}, {val}) added"
 
+            response_len = len(response_body) + 4
+            response = f"{response_len:03d} {response_body}"
+            client_socket.sendall(response.encode('utf8'))
+
+    print(f"Connection with {addr} closed.")
 
