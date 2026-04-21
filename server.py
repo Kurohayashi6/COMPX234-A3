@@ -106,3 +106,8 @@ def start_server():
     sta_thread = threading.Thread(target=print_server_sta, daemon=True)
     sta_thread.start()
 
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    server_socket.bind((host, port))
+    server_socket.listen()
+    print("Server is running and ready to accept multiple clients...")
