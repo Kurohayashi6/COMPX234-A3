@@ -75,4 +75,19 @@ def client_task(filename):
         if client_socket:
             client_socket.close()
 
+def main(m):
+    clients = []
+    for i in range(m):
+        t = threading.Thread(target=client_task, args=(f"test-workload/client_{i + 1}.txt",))
+        clients.append(t)
+        t.start()
+        time.sleep(0.1)
+    for t in clients:
+        t.join()
+
+
+if __name__ == "__main__":
+    n = input("Enter the number of clients: ")
+    main(int(n))
+    sys.exit(0)
 
