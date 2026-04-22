@@ -46,4 +46,20 @@ def client_task(filename):
             key = parts[1] if len(parts) > 1 else ""
             val = parts[2] if len(parts) > 2 else ""
 
+            if cmd == 'PUT':
+                collated_size = len(f"{key} {val}")
+                if collated_size > 970:
+                    print(f"Error: collated size exceeds 970 characters for line: {line}.")
+                    continue
+
+            if cmd == 'PUT':
+                body = f"P {key} {val}"
+            elif cmd == 'GET':
+                body = f"G {key}"
+            elif cmd == 'READ':
+                body = f"R {key}"
+            else:
+                print(f"Error: Unknown command {cmd}")
+                continue
+
 
