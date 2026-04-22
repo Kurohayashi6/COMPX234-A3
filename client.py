@@ -33,4 +33,17 @@ def client_task(filename):
         print(f"Error: File {filename} not found.")
         sys.exit(1)
 
+    client_socket = None
+    try:
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.connect((hostname, port))
+
+        for line in lines:
+            line = line.strip()
+
+            parts = line.split(' ')
+            cmd = parts[0]
+            key = parts[1] if len(parts) > 1 else ""
+            val = parts[2] if len(parts) > 2 else ""
+
 
