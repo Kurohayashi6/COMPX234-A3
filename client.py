@@ -68,4 +68,11 @@ def client_task(filename):
             nnn = recvall(client_socket, 3)
             response = recvall(client_socket, int(nnn) - 3)
             print(f"{line}:{response}")
+    except Exception as e:
+        print(f"Error for {filename}: {e}")
+
+    finally:
+        if client_socket:
+            client_socket.close()
+
 
