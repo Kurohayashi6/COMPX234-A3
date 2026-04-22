@@ -104,7 +104,12 @@ def handle_client(client_socket, addr):
 
 def start_server():
     host = 'localhost'
-    port = 9090
+    if len(sys.argv) != 2:
+        print("Usage: python server.py <port>")
+        sys.exit(1)
+
+    port = int(sys.argv[1])
+
     sta_thread = threading.Thread(target=print_server_sta, daemon=True)
     sta_thread.start()
 
