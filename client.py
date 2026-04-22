@@ -26,4 +26,11 @@ def client_task(filename):
     port = int(sys.argv[2])
     #filename = sys.argv[3]
 
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        print(f"Error: File {filename} not found.")
+        sys.exit(1)
+
 
