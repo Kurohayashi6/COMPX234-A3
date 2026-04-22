@@ -62,4 +62,10 @@ def client_task(filename):
                 print(f"Error: Unknown command {cmd}")
                 continue
 
+            msg = f"{len(body) + 4:03d} {body}"
+            client_socket.sendall(msg.encode('utf-8'))
+
+            nnn = recvall(client_socket, 3)
+            response = recvall(client_socket, int(nnn) - 3)
+            print(f"{line}:{response}")
 
