@@ -1,7 +1,7 @@
 import socket
 import threading
-import sys
 import time
+import sys
 
 tuple_space = {}
 
@@ -24,7 +24,7 @@ def recvall(sock, n):
         if not last:
             return None
         data.extend(last)
-    return data.decode('utf8')
+    return data.decode('utf-8')
 
 def print_server_sta():
     while True:
@@ -46,19 +46,18 @@ def print_server_sta():
                   f"(READs: {sta['total_reads']}, GETs: {sta['total_gets']}, PUTs: {sta['total_puts']})")
             print(f"Total errors: {sta['total_errors']}")
 
-            
 def handle_client(client_socket, addr):
     print(f"New client connected from {addr}.")
 
     with lock:
         sta['total_clients'] += 1
-    with client_socket:
+    try:
         while True:
-            NNN = recvall(client_socket, 3)
-            if not NNN:
+            nnn = recvall(client_socket, 3)
+            if not nnn:
                 break
 
-            msg_len = int(NNN)
+            msg_len = int(nnn)
             msg_body = recvall(client_socket, msg_len - 3)
             if not msg_body:
                 break
@@ -96,9 +95,12 @@ def handle_client(client_socket, addr):
 
             response_len = len(response_body) + 4
             response = f"{response_len:03d} {response_body}"
-            client_socket.sendall(response.encode('utf8'))
-
-    print(f"Connection with {addr} closed.")
+            client_socket.sendall(response.encode('utf-8'))
+    except Exception as e:
+        print(f"Error handling client {addr}: {e}")
+    finally:
+        client_socket.close()
+        print(f"Connection with {addr} closed.")
 
 def start_server():
     host = 'localhost'

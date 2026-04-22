@@ -1,5 +1,8 @@
 import socket
 import sys
+import threading
+import time
+
 
 def recvall(sock, n):
     data = bytearray()
@@ -8,6 +11,6 @@ def recvall(sock, n):
         if not last:
             return None
         data.extend(last)
-    return data.decode('utf8')
+    return data.decode('utf-8')
 
 
