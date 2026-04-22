@@ -13,4 +13,17 @@ def recvall(sock, n):
         data.extend(last)
     return data.decode('utf-8')
 
+def client_task(filename):
+    #if len(sys.argv) != 4:
+        #print("Usage: python client.py <hostname> <port> <filename>")
+        #sys.exit(1)
+
+    if len(sys.argv) != 3:
+        print("Usage: python client.py <hostname> <port>")
+        sys.exit(1)
+
+    hostname = sys.argv[1]
+    port = int(sys.argv[2])
+    #filename = sys.argv[3]
+
 
