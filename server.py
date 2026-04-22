@@ -83,6 +83,7 @@ def handle_client(client_socket, addr):
                         pv = tuple_space.pop(key)
                         response_body = f"OK ({key}, {pv}) removed"
                     else:
+                        sta['total_errors'] += 1
                         response_body = f"ERR {key} does not exist"
                 elif cmd == 'P':
                     sta['total_puts'] += 1
