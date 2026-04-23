@@ -41,7 +41,7 @@ def client_task(filename):
         for line in lines:
             line = line.strip()
 
-            parts = line.split(' ')
+            parts = line.split(' ', 2)
             cmd = parts[0]
             key = parts[1] if len(parts) > 1 else ""
             val = parts[2] if len(parts) > 2 else ""
